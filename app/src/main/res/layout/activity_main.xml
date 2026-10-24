@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:id="@+id/wallpaper_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:tint="#73000000"
+        android:tintMode="src_atop" />
+
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/scrim_top" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/scrim_bottom" />
+
+
+    <!-- Scrolls down to the apps that don't fit in the dock. -->
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <!-- One screen tall (set in code), so the dock rests at the bottom of the screen. -->
+            <FrameLayout
+                android:id="@+id/page"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/clock_corner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="48dp"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextClock
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:format12Hour="h:mm"
+                        android:format24Hour="HH:mm"
+                        android:shadowColor="#80000000"
+                        android:shadowRadius="8"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="44sp" />
+
+                    <TextClock
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="EEEE, d MMMM"
+                        android:format24Hour="EEEE, d MMMM"
+                        android:shadowColor="#80000000"
+                        android:shadowRadius="6"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/empty_home"
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical">
+
+                    <!-- Clock fills the free space above the apps. -->
+                    <LinearLayout
+                        android:id="@+id/clock_center"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:paddingStart="68dp"
+                        android:paddingEnd="68dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextClock
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-thin"
+                            android:format12Hour="h:mm"
+                            android:format24Hour="HH:mm"
+                            android:includeFontPadding="false"
+                            android:shadowColor="#80000000"
+                            android:shadowRadius="12"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="110sp" />
+
+                        <TextClock
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:format12Hour="EEEE, d MMMM"
+                            android:format24Hour="EEEE, d MMMM"
+                            android:shadowColor="#80000000"
+                            android:shadowRadius="8"
+                            android:textColor="#D9FFFFFF"
+                            android:textSize="22sp" />
+                    </LinearLayout>
+
+                    <!-- The glass dock holding the first row of apps. -->
+                    <FrameLayout
+                        android:id="@+id/dock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="48dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <GridLayout
+                            android:id="@+id/grid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:columnCount="5" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/top_buttons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="28dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btn_edit"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/icon_btn_bg"
+                        android:contentDescription="@string/choose_apps"
+                        android:padding="11dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_edit"
+                        android:tint="@color/icon_tint" />
+
+                    <ImageButton
+                        android:id="@+id/btn_all_apps"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/icon_btn_bg"
+                        android:contentDescription="@string/all_apps"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_apps"
+                        android:tint="@color/icon_tint" />
+
+                    <ImageButton
+                        android:id="@+id/btn_settings"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/icon_btn_bg"
+                        android:contentDescription="@string/tv_settings"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/icon_tint" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <GridLayout
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:columnCount="6"
+                android:paddingBottom="48dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

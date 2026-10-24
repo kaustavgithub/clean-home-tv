@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clean Home</string>
+    <string name="a11y_description">Makes the remote\'s Home button open Clean Home instead of the Google TV home screen. It only watches the Home key and which app is on screen. Nothing is read, stored or sent anywhere.</string>
+    <string name="choose_apps">Choose apps</string>
+    <string name="all_apps">All apps</string>
+    <string name="all_apps_hint">Hold OK on an app to add it to or remove it from your home screen.</string>
+    <string name="tv_settings">TV settings</string>
+    <string name="empty_home">Select the pencil at the top left to choose your apps</string>
+    <string name="settings_hint">Tick the apps to show on your home screen. On the home screen, hold OK on an app and choose Move, then use the arrows to put it where you want.</string>
+    <string name="wallpaper_from_phone">Wallpaper from phone</string>
+    <string name="remove_wallpaper">Remove wallpaper</string>
+</resources>

@@ -1,0 +1,14 @@
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+.DS_Store
+# Built app: publish it as a GitHub Release instead of committing it
+*.apk
+*.aab
+# Signing keys and their passwords must never be committed
+*.jks
+*.keystore
+*.p12
+keystore.properties

@@ -1,0 +1,146 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Clean Home wallpaper</title>
+<style>
+  :root{color-scheme:dark}
+  body{font-family:system-ui,sans-serif;background:#121212;color:#fff;margin:0;padding:20px 16px 32px;text-align:center}
+  h1{font-size:20px;font-weight:600;margin:4px 0}
+  .sub{color:#aaa;font-size:14px;margin:0 0 16px}
+  .btn{display:inline-block;padding:14px 22px;border-radius:12px;background:#fff;color:#111;font:600 17px system-ui,sans-serif;border:0;margin:6px}
+  .btn.alt{background:#2a2a2a;color:#fff}
+  .btn:disabled{opacity:.4}
+  #editor{display:none}
+  #frame{width:100%;max-width:720px;margin:12px auto;border-radius:10px;overflow:hidden;background:#000;touch-action:none;box-shadow:0 0 0 2px #444}
+  canvas{display:block;width:100%}
+  input[type=range]{width:100%;max-width:720px}
+  input[type=file]{display:none}
+  .hint{color:#888;font-size:13px;margin:4px 0}
+  #s{color:#bbb;min-height:22px;margin-top:10px}
+</style></head><body>
+<h1>Set your TV wallpaper</h1>
+<p class="sub">Your TV screen is __W__ &times; __H__ (landscape). The frame below is its exact shape.</p>
+<label class="btn" id="pick"><span id="pickText">Choose a photo</span><input id="f" type="file" accept="image/*"></label>
+<div id="editor">
+  <div id="frame"><canvas id="c"></canvas></div>
+  <p class="hint">Drag to move &middot; pinch or use the slider to zoom</p>
+  <input id="z" type="range" min="0" max="1000" value="0" aria-label="Zoom">
+  <div><button class="btn alt" id="fill">Fill screen</button><button class="btn alt" id="whole">Whole photo</button></div>
+  <div><button class="btn" id="send">Send to TV</button></div>
+</div>
+<p id="s"></p>
+<script>
+const W = __W__, H = __H__, MAXZ = 4;
+const q = id => document.getElementById(id);
+const frame = q('frame'), c = q('c'), z = q('z'), s = q('s');
+// zoom is relative to "fill screen" (1); px/py is the photo's centre offset, in TV pixels.
+let img = null, minZ = 1, zoom = 1, px = 0, py = 0;
+const blur = document.createElement('canvas');
+
+const fillScale = () => Math.max(W / img.width, H / img.height);
+
+// Keep a bigger-than-screen photo covering the screen, and a smaller one inside it.
+function clamp() {
+  const sc = fillScale() * zoom;
+  const lx = Math.abs(img.width * sc - W) / 2, ly = Math.abs(img.height * sc - H) / 2;
+  px = Math.min(lx, Math.max(-lx, px));
+  py = Math.min(ly, Math.max(-ly, py));
+}
+
+// Draws the wallpaper into a w x h canvas: the same code makes the preview and what's sent.
+function render(ctx, w, h) {
+  const k = w / W;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  // A tiny copy scaled up is a cheap blur that works in every browser.
+  const bs = Math.max(w / blur.width, h / blur.height);
+  ctx.drawImage(blur, (w - blur.width * bs) / 2, (h - blur.height * bs) / 2, blur.width * bs, blur.height * bs);
+  ctx.fillStyle = 'rgba(0,0,0,.45)';
+  ctx.fillRect(0, 0, w, h);
+  const sc = fillScale() * zoom * k, iw = img.width * sc, ih = img.height * sc;
+  ctx.drawImage(img, w / 2 + px * k - iw / 2, h / 2 + py * k - ih / 2, iw, ih);
+}
+
+function draw() {
+  const width = frame.clientWidth * (window.devicePixelRatio || 1);
+  c.width = Math.round(width);
+  c.height = Math.round(width * H / W);
+  render(c.getContext('2d'), c.width, c.height);
+}
+
+function setZoom(v) {
+  zoom = Math.min(MAXZ, Math.max(minZ, v));
+  z.value = Math.round((zoom - minZ) / (MAXZ - minZ) * 1000);
+  clamp();
+  draw();
+}
+
+q('f').onchange = () => {
+  const file = q('f').files[0];
+  if (!file) return;
+  const i = new Image();
+  i.onload = () => {
+    img = i;
+    minZ = Math.min(W / img.width, H / img.height) / fillScale();
+    blur.width = 32;
+    blur.height = Math.max(1, Math.round(32 * img.height / img.width));
+    blur.getContext('2d').drawImage(img, 0, 0, blur.width, blur.height);
+    q('editor').style.display = 'block';
+    q('pickText').textContent = 'Choose another photo';
+    s.textContent = '';
+    px = py = 0;
+    setZoom(1);
+  };
+  i.onerror = () => { s.textContent = "Couldn't open that photo."; };
+  i.src = URL.createObjectURL(file);
+};
+
+z.oninput = () => setZoom(minZ + z.value / 1000 * (MAXZ - minZ));
+q('fill').onclick = () => { px = py = 0; setZoom(1); };
+q('whole').onclick = () => { px = py = 0; setZoom(minZ); };
+
+// One finger drags, two fingers pinch.
+const touches = new Map();
+let pinch = null;
+frame.onpointerdown = e => {
+  frame.setPointerCapture(e.pointerId);
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  pinch = null;
+};
+frame.onpointermove = e => {
+  if (!img || !touches.has(e.pointerId)) return;
+  const prev = touches.get(e.pointerId);
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (touches.size === 1) {
+    const toTv = W / frame.clientWidth;
+    px += (e.clientX - prev.x) * toTv;
+    py += (e.clientY - prev.y) * toTv;
+    clamp();
+    draw();
+  } else if (touches.size === 2) {
+    const [a, b] = [...touches.values()];
+    const dist = Math.hypot(a.x - b.x, a.y - b.y);
+    if (pinch) setZoom(zoom * dist / pinch);
+    pinch = dist;
+  }
+};
+frame.onpointerup = frame.onpointercancel = e => { touches.delete(e.pointerId); pinch = null; };
+window.onresize = () => { if (img) draw(); };
+
+q('send').onclick = () => {
+  const out = document.createElement('canvas');
+  out.width = W;
+  out.height = H;
+  render(out.getContext('2d'), W, H);
+  q('send').disabled = true;
+  s.textContent = 'Sending…';
+  out.toBlob(async blob => {
+    try {
+      const r = await fetch(location.pathname + '/upload', { method: 'POST', body: blob });
+      s.textContent = r.ok ? 'Done! Check your TV.' : await r.text();
+    } catch (e) {
+      s.textContent = 'Could not reach the TV. Is the window still open on the TV?';
+    }
+    q('send').disabled = false;
+  }, 'image/jpeg', 0.92);
+};
+</script></body></html>
