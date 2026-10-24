@@ -6,7 +6,7 @@
     <string name="all_apps">All apps</string>
     <string name="all_apps_hint">Hold OK on an app to add it to or remove it from your home screen.</string>
     <string name="tv_settings">TV settings</string>
-    <string name="empty_home">Select the pencil at the top left to choose your apps</string>
+    <string name="empty_home">Select the pencil at the top %1$s to choose your apps</string>
     <string name="settings_hint">Tick the apps to show on your home screen. On the home screen, hold OK on an app and choose Move, then use the arrows to put it where you want.</string>
     <string name="wallpaper_from_phone">Wallpaper from phone</string>
     <string name="remove_wallpaper">Remove wallpaper</string>

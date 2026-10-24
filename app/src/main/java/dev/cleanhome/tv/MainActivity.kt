@@ -119,6 +119,7 @@ class MainActivity : Activity() {
         val params = buttons.layoutParams as FrameLayout.LayoutParams
         params.gravity = Gravity.TOP or (if (clockOnLeft) Gravity.END else Gravity.START)
         buttons.layoutParams = params
+        empty.text = getString(R.string.empty_home, if (clockOnLeft) "right" else "left")
     }
 
     private fun loadWallpaper() {
