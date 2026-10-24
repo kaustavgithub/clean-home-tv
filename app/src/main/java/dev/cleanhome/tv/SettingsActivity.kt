@@ -98,7 +98,7 @@ class SettingsActivity : Activity() {
     }
 
     private fun openAccessibilitySettings() {
-        Toast.makeText(this, "Open \"Clean Home\" and turn it on", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Open \"${getString(R.string.app_name)}\" and turn it on", Toast.LENGTH_LONG).show()
         try {
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         } catch (e: ActivityNotFoundException) {

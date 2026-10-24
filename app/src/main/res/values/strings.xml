@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Clean Home</string>
-    <string name="a11y_description">Makes the remote\'s Home button open Clean Home instead of the Google TV home screen. It only watches the Home key and which app is on screen. Nothing is read, stored or sent anywhere.</string>
+    <string name="app_name">Clean Home TV</string>
+    <string name="a11y_description">Makes the remote\'s Home button open Clean Home TV instead of the Google TV home screen. It only watches the Home key and which app is on screen. Nothing is read, stored or sent anywhere.</string>
     <string name="choose_apps">Choose apps</string>
     <string name="all_apps">All apps</string>
     <string name="all_apps_hint">Hold OK on an app to add it to or remove it from your home screen.</string>

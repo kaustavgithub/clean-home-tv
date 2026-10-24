@@ -1,4 +1,4 @@
-# Clean Home
+# Clean Home TV
 
 A minimal home screen for Google TV / Android TV: only the apps you choose, a clock and your own
 wallpaper. No ads, no suggestions, no rows of recommended content.
@@ -11,7 +11,7 @@ button keeps working.
 - Your first row of apps sits at the bottom of the screen; the rest are one press down.
 - Wallpaper from your phone: scan a QR code on the TV and pick a photo.
 - Rearrange apps Apple TV style: hold OK → **Move**, then use the arrows.
-- The remote's Home button opens Clean Home (optional, via an accessibility service).
+- The remote's Home button opens Clean Home TV (optional, via an accessibility service).
 
 Tested on a Google TV Streamer (Android 14). Needs Android 9 or newer.
 
@@ -22,7 +22,7 @@ Tested on a Google TV Streamer (Android 14). Needs Android 9 or newer.
 
 ## Install on the TV
 
-Clean Home isn't on the Play Store, so it has to be sideloaded. First turn on developer mode on
+Clean Home TV isn't on the Play Store, so it has to be sideloaded. First turn on developer mode on
 the TV: **Settings → System → About**, then click **Android TV OS build** 7 times.
 
 ### Option A: without a computer (Downloader app)
@@ -52,10 +52,10 @@ pairs when needed). Run it from a normal Terminal / iTerm tab.
 
 ### First start
 
-1. Open **Clean Home** from the TV's apps list.
+1. Open **Clean Home TV** from the TV's apps list.
 2. Tick the apps you want on your home screen.
-3. Press **Home button: Turn on** and switch on **Clean Home** in Accessibility, so the remote's
-   Home button opens Clean Home. The service only watches the Home key and which app is on
+3. Press **Home button: Turn on** and switch on **Clean Home TV** in Accessibility, so the remote's
+   Home button opens Clean Home TV. The service only watches the Home key and which app is on
    screen; nothing is read, stored or sent anywhere.
 
 ## Use
