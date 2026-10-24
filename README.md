@@ -87,3 +87,7 @@ The APK is written to `app/build/outputs/apk/release/app-release.apk`.
 The release build is signed with your local Android debug key, which is fine for sideloading.
 Android only installs an update over an existing install when both are signed with the same key,
 so to switch between the downloaded APK and your own build, uninstall the other one first.
+
+## License
+
+[MIT](LICENSE)
